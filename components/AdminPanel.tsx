@@ -68,7 +68,7 @@ export default function AdminPanel() {
         const workbook = XLSX.read(data, { type: 'array' });
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const rows: string[][] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-        const extracted = rows.flat().map((c) => String(c ?? '').trim()).filter((v) => v.length > 0 && v.length <= 100);
+        const extracted = rows.slice(1).flat().map((c) => String(c ?? '').trim()).filter((v) => v.length > 0 && v.length <= 100);
         setExcelPreview(extracted);
       } catch {
         showMessage('Failed to read file. Ensure it is not corrupted.', true);
