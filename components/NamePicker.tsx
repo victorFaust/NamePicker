@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useNames } from '@/hooks/useNames';
 
 export default function NamePicker() {
-  const { names } = useNames();
+  const { names, setNames } = useNames();
   const [selectedCount, setSelectedCount] = useState(1);
   const [results, setResults] = useState<string[]>([]);
   const [revealedResults, setRevealedResults] = useState<string[]>([]);
@@ -34,7 +34,10 @@ export default function NamePicker() {
         setRevealedResults((prev) => [...prev, picked[index]]);
       }, 300 + index * 500);
     });
-    setTimeout(() => setIsSpinning(false), 300 + picked.length * 500);
+    setTimeout(() => {
+      setIsSpinning(false);
+      setNames(names.filter((n) => !picked.includes(n)));
+    }, 300 + picked.length * 500);
   };
 
   return (
